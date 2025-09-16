@@ -25,7 +25,6 @@ var financeController = (function () {})();
 
 // connect controller
 var appController = (function (uiController, financeController) {
-  var DOM = uiController.getDOMstrings();
   var ctrlAddItem = function () {
     // 1. oruulah ugugdliig delgetsees olj awna
     console.log(uiController.getInput());
@@ -34,13 +33,22 @@ var appController = (function (uiController, financeController) {
     // 4. tuswiig tootsno
     // 5. etssiin vldegdel, tootsoog delgetsend gargana.
   };
-  document.querySelector(DOM.addBtn).addEventListener("click", function () {
-    ctrlAddItem();
-  });
-
-  document.addEventListener("keypress", function (event) {
-    if (event.keyCode === 13 || event.which === 13) {
+  var setupEventListeners = function () {
+    var DOM = uiController.getDOMstrings();
+    document.querySelector(DOM.addBtn).addEventListener("click", function () {
       ctrlAddItem();
-    }
-  });
+    });
+
+    document.addEventListener("keypress", function (event) {
+      if (event.keyCode === 13 || event.which === 13) {
+        ctrlAddItem();
+      }
+    });
+  };
+  return {
+    init: function () {
+      console.log("Application started");
+      setupEventListeners();
+    },
+  };
 })(uiController, financeController);
