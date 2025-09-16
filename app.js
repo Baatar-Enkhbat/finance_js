@@ -1,20 +1,40 @@
 // desplay controller
-var uiController = (function () {})();
+var uiController = (function () {
+  var DOMstrings = {
+    inputType: ".add__type",
+    inputDescription: ".add__description",
+    inputValue: ".add__value",
+    addBtn: ".add__btn",
+  };
 
+  return {
+    getInput: function () {
+      return {
+        type: document.querySelector(DOMstrings.inputType).value,
+        description: document.querySelector(DOMstrings.inputDescription).value,
+        value: document.querySelector(DOMstrings.inputValue).value,
+      };
+    },
+    getDOMstrings: function () {
+      return DOMstrings;
+    },
+  };
+})();
 // finance controller
 var financeController = (function () {})();
 
 // connect controller
 var appController = (function (uiController, financeController) {
+  var DOM = uiController.getDOMstrings();
   var ctrlAddItem = function () {
     // 1. oruulah ugugdliig delgetsees olj awna
-    console.log("oruulah ugugdliig delgetsees olj awna");
+    console.log(uiController.getInput());
     // 2. Olj awsan uguglvvdee sanhvvgiin controllert damjuulj tend hadgalna.
     // 3. 2 iig tohiroh hesegt gargana
     // 4. tuswiig tootsno
     // 5. etssiin vldegdel, tootsoog delgetsend gargana.
   };
-  document.querySelector(".add__btn").addEventListener("click", function () {
+  document.querySelector(DOM.addBtn).addEventListener("click", function () {
     ctrlAddItem();
   });
 
