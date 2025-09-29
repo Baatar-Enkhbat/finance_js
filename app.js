@@ -34,14 +34,38 @@ var financeController = (function () {
     this.value = value;
   };
 
+  //private data
   var data = {
-    allItem: {
+    items: {
       inc: [],
       exp: [],
     },
     totals: {
-      inc: [],
-      exp: [],
+      inc: 0,
+      exp: 0,
+    },
+  };
+
+  return {
+    addItem: function (type, desc, val) {
+      var item, id;
+
+      if (data.items[type].length === 0) {
+        id = 1;
+      } else {
+        id = data.items[type][data.items[type].length - 1].id + 1;
+      }
+
+      if (type === "inc") {
+        item = new Income(id, desc, val);
+      } else {
+        item = new Expense(id, desc, val);
+      }
+
+      data.items[type].push(item);
+    },
+    seeData: function () {
+      return data;
     },
   };
 })();
@@ -50,8 +74,10 @@ var financeController = (function () {
 var appController = (function (uiController, financeController) {
   var ctrlAddItem = function () {
     // 1. oruulah ugugdliig delgetsees olj awna
-    console.log(uiController.getInput());
+    var input = console.log(uiController.getInput());
+
     // 2. Olj awsan uguglvvdee sanhvvgiin controllert damjuulj tend hadgalna.
+    financeController.addItem(input.type, input.description, input.value);
     // 3. 2 iig tohiroh hesegt gargana
     // 4. tuswiig tootsno
     // 5. etssiin vldegdel, tootsoog delgetsend gargana.
@@ -70,8 +96,10 @@ var appController = (function (uiController, financeController) {
   };
   return {
     init: function () {
-      console.log("Application started");
+      console.log("Application started...");
       setupEventListeners();
     },
   };
 })(uiController, financeController);
+
+appController.init();
